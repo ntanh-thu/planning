@@ -1,0 +1,12 @@
+.dashboard-layout {
+   display: flex;
+
+   .dashboard-layout-right {
+      width: 100%;
+   }
+}
+
+.dashboard-content {
+   background-color: #f5f6fa;
+   height: calc(100vh - 70px);
+}

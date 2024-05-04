@@ -11,8 +11,7 @@
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
 }
-.body-largest {
-}
-.body-largest-contanier {
-   display: flex;
+
+body {
+   margin: 0;
 }

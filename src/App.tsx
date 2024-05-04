@@ -4,11 +4,21 @@ import './styles/main.scss';
 import './App.css';
 
 export default function App() {
+   console.log(route[0].children !== undefined ? route[0].children : null);
+
    return (
       <BrowserRouter>
          <Routes>
             {route.map((item, i) => {
-               return <Route path={item.path} element={item.element} key={i} />;
+               return (
+                  <Route path={item.path} element={item.element} key={i}>
+                     {item.children !== undefined
+                        ? item.children.map((itemchildren, ichildren) => {
+                             return <Route path={itemchildren.path} element={itemchildren.element} key={ichildren} />;
+                          })
+                        : null}
+                  </Route>
+               );
             })}
          </Routes>
       </BrowserRouter>
