@@ -4,14 +4,17 @@ import { NavLink } from 'react-router-dom';
 const MenuLeft = () => {
    const leftMenuList = [
       {
-         name: 'Home',
+         name: 'Dashboard',
+         path: '',
          icon: <ProductOutlined className="menu-left-item__icon" />,
       },
       {
          name: 'Tasks',
+         path: 'tasks',
          icon: <UnorderedListOutlined className="menu-left-item__icon" />,
       },
    ];
+
    return (
       <div className="menu-left">
          <div className="menu-left-icon">
@@ -24,7 +27,8 @@ const MenuLeft = () => {
                      isPending ? '' : isActive ? 'menu-left-item menu-left-item-active' : 'menu-left-item'
                   }
                   key={i}
-                  to={`${item.name}`}
+                  to={`${item.path}`}
+                  end={item.path === ''}
                >
                   {item.icon}
                   {item.name}

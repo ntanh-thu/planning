@@ -1,21 +1,21 @@
-import { Dashboard } from './pages/Dashboards';
-import HomeDashBoard from './pages/Dashboards/Home';
-import Tasks from './pages/Dashboards/Tasks';
-import { HomePages } from './pages/HomePages';
+import { Portal } from './pages/Portal';
+import Dashboard from './pages/Portal/Dashboard';
+import Tasks from './pages/Portal/Tasks';
+import { Ecommerce } from './pages/Ecommerce';
 
-const DASHBOARD = '/dashboard';
-const HOMEPAGES = '/homepages';
+const PORTAL = '/portal';
+const ECOMMERCE = '/ecommerce';
 export const route = [
    {
-      path: DASHBOARD,
-      element: <Dashboard />,
+      path: PORTAL,
+      element: <Portal />,
       children: [
+         { path: '', element: <Dashboard /> },
          { path: 'tasks', element: <Tasks /> },
-         { path: 'home', element: <HomeDashBoard /> },
       ],
    },
    {
-      path: HOMEPAGES,
-      element: <HomePages />,
+      path: ECOMMERCE,
+      element: <Ecommerce />,
    },
 ];
