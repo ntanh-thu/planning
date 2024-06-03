@@ -1,0 +1,19 @@
+.tasks-page-header {
+   display: flex;
+   justify-content: space-between;
+   .tasks-page-header-name {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: normal;
+   }
+   .tasks-page-header-actions {
+      > .ant-space-item > button {
+         padding: 10px 16px;
+         height: auto;
+         font-size: 14px;
+         line-height: 20px;
+         font-weight: 500;
+         font-family: 'Inter', sans-serif;
+      }
+   }
+}

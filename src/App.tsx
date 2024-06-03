@@ -4,8 +4,6 @@ import './styles/main.scss';
 import './App.css';
 
 export default function App() {
-   console.log(route[0].children !== undefined ? route[0].children : null);
-
    return (
       <BrowserRouter>
          <Routes>

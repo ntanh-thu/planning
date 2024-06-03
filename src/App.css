@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+   box-sizing: border-box;
+}
+
 :root {
    font-family: Nunito Sans, sans-serif;
    line-height: 1.5;
@@ -12,6 +16,12 @@
    -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body {
+   height: 100%;
    margin: 0;
+}
+
+#root {
+   min-height: 100%;
 }

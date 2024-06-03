@@ -8,8 +8,10 @@ export const Portal = () => {
          <MenuLeft />
          <div className="dashboard-layout-right">
             <Header />
-            <div className="dashboard-content">
-               <Outlet />
+            <div className="dashboard-background">
+               <div className="dashboard-content">
+                  <Outlet />
+               </div>
             </div>
          </div>
       </div>
