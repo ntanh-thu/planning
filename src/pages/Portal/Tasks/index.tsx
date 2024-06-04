@@ -1,38 +1,60 @@
-import { faker } from '@faker-js/faker';
-import { Button, Space, Table } from 'antd';
+import { Button, Card, Checkbox, Space } from 'antd';
+import { useState } from 'react';
+import { AddNewTask } from './AddNewTask';
 
 const Tasks = () => {
-   const column = [
-      {
-         title: 'Task Name',
-         dataIndex: 'taskName',
-         key: 'taskName',
-      },
-      {
-         title: 'Task Name',
-         dataIndex: 'type',
-         key: 'type',
-      },
-   ];
-
-   const dataSource = new Array(6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1).map((item, i) => {
-      return {
-         key: i,
-         taskName: faker.person.jobTitle(),
-         type: faker.number.int({ min: 0, max: 3 }),
-      };
-   });
+   const [newTask, setNewTask] = useState(false);
    return (
       <>
          <div className="tasks-page-header">
             <div className="tasks-page-header-name">Tasks</div>
 
             <Space size={12} className="tasks-page-header-actions">
-               <Button type="primary">Add Task</Button>
+               <Button
+                  type="primary"
+                  onClick={() => {
+                     setNewTask(true);
+                  }}
+               >
+                  Add Task
+               </Button>
                <Button>Filter</Button>
             </Space>
          </div>
-         <Table columns={column} dataSource={dataSource} />
+         <div className="tasks-page">
+            <Space size={10} direction="vertical">
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+               <Card>
+                  <Checkbox />
+               </Card>
+            </Space>
+         </div>
+         <AddNewTask
+            open={newTask}
+            onCancel={() => {
+               setNewTask(false);
+            }}
+         />
       </>
    );
 };

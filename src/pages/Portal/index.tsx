@@ -9,7 +9,7 @@ export const Portal = () => {
          <div className="dashboard-layout-right">
             <Header />
             <div className="dashboard-background">
-               <div className="dashboard-content">
+               <div className="dashboard-content" id="dashboard-content">
                   <Outlet />
                </div>
             </div>

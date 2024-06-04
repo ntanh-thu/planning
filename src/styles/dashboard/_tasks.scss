@@ -17,3 +17,21 @@
       }
    }
 }
+.tasks-page {
+   display: flex;
+   > div {
+      width: 50%;
+   }
+}
+
+.add-task-modal {
+   .ant-modal-content {
+      border: none;
+   }
+}
+
+.add-task-modal-header {
+   font-size: 18px;
+   font-weight: bold;
+   margin-bottom: 24px;
+}
