@@ -1,5 +1,6 @@
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import { ReactElement, useState } from 'react';
+import { useAppSelector } from '../../../../hook';
 
 type Props = {
    open: boolean;
@@ -7,29 +8,15 @@ type Props = {
 };
 export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
    const [form] = Form.useForm();
+   const listCatology = useAppSelector(state => {
+      state.tasks.listCatology;
+   });
    const [completeMethod, setCompleteMethod] = useState(0);
    const handleAddNewTask = (values: object) => {
       console.log(values);
    };
 
-   const LIST_CATOLOGY_TASK = [
-      {
-         label: 'Study',
-         value: 0,
-      },
-      {
-         label: 'Skin Care',
-         value: 0,
-      },
-      {
-         label: 'Work',
-         value: 1,
-      },
-      {
-         label: 'Homework',
-         value: 3,
-      },
-   ];
+   console.log(listCatology);
 
    return (
       <Modal
@@ -78,13 +65,13 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                      );
                   }}
                >
-                  {LIST_CATOLOGY_TASK.map((item, i) => {
+                  {/* {listCatology.map((item, i) => {
                      return (
                         <Select.Option key={i} value={item.value}>
                            {item.label}
                         </Select.Option>
                      );
-                  })}
+                  })} */}
                </Select>
             </Form.Item>
             <Form.Item
