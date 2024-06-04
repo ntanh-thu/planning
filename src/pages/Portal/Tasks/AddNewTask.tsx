@@ -1,6 +1,7 @@
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import { ReactElement, useState } from 'react';
-import { useAppSelector } from '../../../../hook';
+import { useAppDispatch, useAppSelector } from '../../../../hook';
+import { addCatology, addTask } from './tasksSlice';
 
 type Props = {
    open: boolean;
@@ -8,15 +9,28 @@ type Props = {
 };
 export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
    const [form] = Form.useForm();
-   const listCatology = useAppSelector(state => {
-      state.tasks.listCatology;
-   });
+   const listCatology = useAppSelector(state => state.tasks.listCatology);
+   const dispatch = useAppDispatch();
    const [completeMethod, setCompleteMethod] = useState(0);
-   const handleAddNewTask = (values: object) => {
-      console.log(values);
+   const [newCatology, setNewCatology] = useState('');
+   const handleAddNewTask = (values: {
+      catology: number;
+      completeMethod: number;
+      description: string;
+      nameTask: string;
+   }) => {
+      dispatch(addTask(values));
+      onCancel();
+      form.resetFields();
    };
 
-   console.log(listCatology);
+   const initialValue = {
+      nameTask: '',
+      description: '',
+      catology: 0,
+      completeMethod: 0,
+      rangeTime: '',
+   };
 
    return (
       <Modal
@@ -29,7 +43,13 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
          className="add-task-modal"
       >
          <div className="add-task-modal-header">Add New Tasks</div>
-         <Form onFinish={handleAddNewTask} form={form} labelCol={{ span: 8 }} labelAlign="left">
+         <Form
+            onFinish={handleAddNewTask}
+            form={form}
+            labelCol={{ span: 8 }}
+            labelAlign="left"
+            initialValues={initialValue}
+         >
             <Form.Item
                name={'nameTask'}
                label="Task Name"
@@ -42,7 +62,7 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                <Input.TextArea />
             </Form.Item>
             <Form.Item
-               name={'catology'}
+               name="catology"
                label="Catology"
                rules={[{ required: true, message: 'Please select catology of task' }]}
             >
@@ -51,27 +71,29 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                      return (
                         <>
                            {menu}
-                           <Input
-                              onPressEnter={event => {
-                                 console.log(event);
-
-                                 //  LIST_CATOLOGY_TASK.push({
-                                 //     label: ,
-                                 //     value: LIST_CATOLOGY_TASK.length,
-                                 //  });
-                              }}
-                           />
+                           <div className="add-catology">
+                              <Input
+                                 value={newCatology}
+                                 onChange={event => {
+                                    setNewCatology(event.target.value);
+                                 }}
+                                 onPressEnter={() => {
+                                    dispatch(addCatology(newCatology));
+                                    setNewCatology('');
+                                 }}
+                              />
+                           </div>
                         </>
                      );
                   }}
                >
-                  {/* {listCatology.map((item, i) => {
+                  {listCatology.map((item, i) => {
                      return (
                         <Select.Option key={i} value={item.value}>
                            {item.label}
                         </Select.Option>
                      );
-                  })} */}
+                  })}
                </Select>
             </Form.Item>
             <Form.Item
@@ -81,7 +103,6 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                rules={[{ required: true, message: 'Please choose a complete method' }]}
             >
                <Select
-                  defaultValue={0}
                   onChange={event => {
                      setCompleteMethod(event);
                   }}

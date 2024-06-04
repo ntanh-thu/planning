@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../../../store';
 
-// Define a type for the slice state
 const LIST_CATOLOGY_TASK = [
    {
       label: 'Study',
@@ -10,48 +9,53 @@ const LIST_CATOLOGY_TASK = [
    },
    {
       label: 'Skin Care',
-      value: 0,
+      value: 1,
    },
    {
       label: 'Work',
-      value: 1,
+      value: 2,
    },
    {
       label: 'Homework',
       value: 3,
    },
 ];
+const initTasks = [{ catology: 4, completeMethod: 0, description: '', nameTask: 'tasks 1' }];
 
 localStorage.setItem('list-catology', JSON.stringify(LIST_CATOLOGY_TASK));
+localStorage.setItem('tasks', JSON.stringify(initTasks));
 
 interface TasksState {
-   value: number;
+   tasks: { catology: number; completeMethod: number; description: string; nameTask: string }[];
    listCatology: { label: string; value: number }[];
 }
 
-// Define the initial state using that type
-const initialState: TasksState = {
-   value: 0,
-   listCatology: LIST_CATOLOGY_TASK,
-};
+const localStorageTasks = JSON.parse(localStorage.getItem('tasks')!);
+const localStorageCatology = JSON.parse(localStorage.getItem('list-catology')!);
 
-console.log(initialState);
+const initialState: TasksState = {
+   tasks: localStorageTasks,
+   listCatology: localStorageCatology,
+};
 
 export const tasksSlice = createSlice({
    name: 'tasks',
-   // `createSlice` will infer the state type from the `initialState` argument
    initialState,
    reducers: {
-      // Use the PayloadAction type to declare the contents of `action.payload`
-      incrementByAmount: (state, action: PayloadAction<number>) => {
-         state.value += action.payload;
+      addCatology: (state, action: PayloadAction<string>) => {
+         state.listCatology.push({ label: action.payload, value: state.listCatology.length });
+      },
+      addTask: (
+         state,
+         action: PayloadAction<{ catology: number; completeMethod: number; description: string; nameTask: string }>
+      ) => {
+         state.tasks.push(action.payload);
       },
    },
 });
 
-export const { incrementByAmount } = tasksSlice.actions;
+export const { addCatology, addTask } = tasksSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectTasks = (state: RootState) => state.tasks.value;
+export const selectTasks = (state: RootState) => state.tasks;
 
 export default tasksSlice.reducer;
