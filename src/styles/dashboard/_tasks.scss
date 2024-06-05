@@ -25,10 +25,21 @@
    .task-card {
       .ant-card-body {
          display: flex;
+         justify-content: space-between;
+         &::before{
+            content: none;
+         }
+         &::after{
+            content: none;
+         }
       }
       .task-card-name {
          width: fit-content;
          margin: 0 10px;
+      }
+      .task-card-check-done {
+         font-size: 20px;
+         color: #00e600;
       }
    }
 }
@@ -46,4 +57,49 @@
 }
 .add-catology {
    position: relative;
+   // .add-catology-input {
+   // }
+   // .add-catology-input:valid + .add-catology-action {
+   //    display: flex;
+   // }
+   // .add-catology-input:invalid + .add-catology-action {
+   //    display: none;
+   // }
+   .add-catology-action {
+      position: absolute;
+      z-index: 1152;
+      height: 100%;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      .add-catology-action-icon {
+         font-size: 18px;
+         margin: 0 5px;
+         cursor: pointer;
+      }
+      .__check {
+         color: #00e600;
+      }
+      .__close {
+         color: #ff0000;
+      }
+   }
+}
+.catologies {
+}
+.catologies-option {
+   position: relative;
+   > .ant-select-item-option-content {
+      > .anticon-delete {
+         position: absolute;
+         color: #ff0000;
+         font-size: 16px;
+         z-index: 1200;
+         right: 0;
+         top: 50%;
+         transform: translate(-50%, -50%);
+         margin: 0 10px;
+      }
+   }
 }

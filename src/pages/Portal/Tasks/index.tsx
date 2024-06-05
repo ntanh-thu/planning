@@ -1,12 +1,14 @@
-import { Button, Card, Checkbox, Space } from 'antd';
+import { Button, Card, Space } from 'antd';
 import { useState } from 'react';
 import { AddNewTask } from './AddNewTask';
 import { useAppSelector } from '../../../../hook';
+import { CheckCircleOutlined } from '@ant-design/icons';
 
 const Tasks = () => {
    const [newTask, setNewTask] = useState(false);
 
    const tasks = useAppSelector(state => state.tasks.tasks);
+   console.log(tasks);
 
    return (
       <>
@@ -29,9 +31,12 @@ const Tasks = () => {
                {tasks.map((item, i) => {
                   return (
                      <Card key={i} className="task-card">
-                        {item.completeMethod == 0 && <Checkbox />}
                         <div className="task-card-name">{item.nameTask}</div>
-                        <div></div>
+                        {item.completeMethod == 0 ? (
+                           <CheckCircleOutlined className="task-card-check-done" />
+                        ) : (
+                           item.startTime?.format('HH:mm') + ' - ' + item.endTime?.format('HH:mm')
+                        )}
                      </Card>
                   );
                })}

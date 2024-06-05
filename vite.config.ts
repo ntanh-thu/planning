@@ -11,6 +11,7 @@ export default defineConfig({
          { find: '@components', replacement: path.resolve('./src/components') },
          { find: '@assets', replacement: path.resolve('./src/assets') },
          { find: '@pages', replacement: path.resolve('./src/pages') },
+         { find: 'hook', replacement: path.resolve('hook') },
       ],
    },
    server: {
