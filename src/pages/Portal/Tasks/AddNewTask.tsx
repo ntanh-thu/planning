@@ -1,16 +1,40 @@
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hook';
-import { addTask, removeCatology } from './tasksSlice';
-import { DeleteOutlined } from '@ant-design/icons';
+import { TaskType, addTask, removeCatology, updateTasks } from './tasksSlice';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import AddCatology from './AddCatology';
 import dayjs, { Dayjs } from 'dayjs';
+import { faker } from '@faker-js/faker';
 
 type Props = {
    open: boolean;
    onCancel: () => void;
+   edit: {
+      id: number;
+      catology: number;
+      completeMethod: number;
+      description: string;
+      nameTask: string;
+      startTime?: Dayjs | undefined;
+      endTime?: Dayjs | undefined;
+      status: 'done' | 'pending' | 'todo';
+   };
 };
-export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
+export const AddNewTask = ({
+   open = false,
+   onCancel = () => {},
+   edit = {
+      id: 0,
+      nameTask: '',
+      description: '',
+      catology: 0,
+      completeMethod: 0,
+      startTime: dayjs(),
+      endTime: dayjs().add(1, 'hour'),
+      status: 'todo',
+   },
+}: Props) => {
    const [form] = Form.useForm();
    const listCatology = useAppSelector(state => state.tasks.listCatology);
    const dispatch = useAppDispatch();
@@ -21,18 +45,29 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
       completeMethod: number;
       description: string;
       nameTask: string;
-      startTime: Dayjs;
-      endTime: Dayjs;
-      status: 'done' | 'pending' | 'todo';
+      startTime?: Dayjs | undefined;
+      endTime?: Dayjs | undefined;
    }) => {
-      const response: typeof values = {
+      const responseCreate: TaskType = {
          ...values,
-         startTime: values.startTime,
-         endTime: values.endTime,
-         status: 'done',
+         startTime: values.startTime?.toString(),
+         endTime: values.endTime?.toString(),
+         id: faker.number.int(),
+         status: 'todo',
       };
 
-      dispatch(addTask(response));
+      const responseEdit: TaskType = {
+         ...values,
+         startTime: values.startTime?.toString(),
+         endTime: values.endTime?.toString(),
+         status: edit.status,
+         id: edit.id,
+      };
+      if (edit.nameTask !== '') {
+         dispatch(updateTasks(responseEdit));
+      } else {
+         dispatch(addTask(responseCreate));
+      }
       onCancel();
       form.resetFields();
       setCompleteMethod(0);
@@ -45,6 +80,12 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
       startTime: dayjs(),
       endTime: dayjs().add(1, 'hour'),
    };
+
+   useEffect(() => {
+      if (edit.nameTask !== '') {
+         form.setFieldsValue(edit);
+      }
+   }, [edit]);
 
    return (
       <Modal
@@ -102,14 +143,17 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                         <Select.Option key={i} value={item.value} className="catologies-option">
                            {item.label}
                            {!item.default && (
-                              <DeleteOutlined
-                                 onClick={() => {
-                                    dispatch(removeCatology(item.value));
-                                    if (form.getFieldValue('catology') === item.value) {
-                                       form.setFieldValue('catology', 0);
-                                    }
-                                 }}
-                              />
+                              <div className="catologies-option-action">
+                                 <DeleteOutlined
+                                    onClick={() => {
+                                       dispatch(removeCatology(item.value));
+                                       if (form.getFieldValue('catology') === item.value) {
+                                          form.setFieldValue('catology', 0);
+                                       }
+                                    }}
+                                 />
+                                 <EditOutlined />
+                              </div>
                            )}
                         </Select.Option>
                      );
@@ -131,7 +175,7 @@ export const AddNewTask = ({ open = false, onCancel = () => {} }: Props) => {
                   <Select.Option value={1}>Timing</Select.Option>
                </Select>
             </Form.Item>
-            {completeMethod !== 0 ? (
+            {completeMethod !== 0 || edit.completeMethod !== 0 ? (
                <>
                   <Form.Item
                      name="startTime"

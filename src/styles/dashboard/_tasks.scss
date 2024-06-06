@@ -19,6 +19,8 @@
 }
 .tasks-page {
    display: flex;
+   gap: 10px;
+   margin-top: 10px;
    > div {
       width: 50%;
    }
@@ -26,10 +28,10 @@
       .ant-card-body {
          display: flex;
          justify-content: space-between;
-         &::before{
+         &::before {
             content: none;
          }
-         &::after{
+         &::after {
             content: none;
          }
       }
@@ -37,9 +39,33 @@
          width: fit-content;
          margin: 0 10px;
       }
-      .task-card-check-done {
-         font-size: 20px;
-         color: #00e600;
+      .task-card-time {
+         color: #979797;
+      }
+      .task-card-status {
+         display: flex;
+         gap: 10px;
+         align-items: center;
+         color: #979797;
+         > span {
+            cursor: pointer;
+         }
+         .task-card-status-todo {
+            font-size: 20px;
+            color: #00e600;
+         }
+         .task-card-status-done {
+            font-size: 20px;
+            color: #979797;
+         }
+         .task-card-status-delete {
+            font-size: 20px;
+            color: #ff0000;
+         }
+         .task-card-status-edit {
+            font-size: 20px;
+            color: #666666;
+         }
       }
    }
 }
@@ -57,14 +83,6 @@
 }
 .add-catology {
    position: relative;
-   // .add-catology-input {
-   // }
-   // .add-catology-input:valid + .add-catology-action {
-   //    display: flex;
-   // }
-   // .add-catology-input:invalid + .add-catology-action {
-   //    display: none;
-   // }
    .add-catology-action {
       position: absolute;
       z-index: 1152;
@@ -91,15 +109,21 @@
 .catologies-option {
    position: relative;
    > .ant-select-item-option-content {
-      > .anticon-delete {
-         position: absolute;
-         color: #ff0000;
-         font-size: 16px;
-         z-index: 1200;
-         right: 0;
-         top: 50%;
-         transform: translate(-50%, -50%);
-         margin: 0 10px;
+      display: flex;
+      justify-content: space-between;
+      .catologies-option-action {
+         > .anticon-delete {
+            color: #ff0000;
+            font-size: 16px;
+            z-index: 1200;
+            margin-right: 10px;
+         }
+         > .anticon-edit {
+            color: black;
+            font-size: 16px;
+            z-index: 1200;
+            margin-right: 10px;
+         }
       }
    }
 }

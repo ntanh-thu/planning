@@ -1,9 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../../../store';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-const initCatology = [
+export type TaskType = {
+   id: number;
+   catology: number;
+   completeMethod: number;
+   description: string;
+   nameTask: string;
+   startTime?: string;
+   endTime?: string;
+   status: 'done' | 'pending' | 'todo';
+};
+
+export type CatologiesType = { label: string; value: number; default: boolean }[];
+
+const initCatology: CatologiesType = [
    {
       label: 'Study',
       value: 0,
@@ -25,40 +38,28 @@ const initCatology = [
       default: true,
    },
 ];
-const initTasks = [
-   {
-      catology: 4,
-      completeMethod: 0,
-      description: '',
-      nameTask: 'tasks 1',
-      startTime: dayjs(),
-      endTime: dayjs().add(1, 'h'),
-      status: 'todo',
-   },
-];
 
+const initTasks: TaskType = {
+   id: 0,
+   catology: 4,
+   completeMethod: 0,
+   description: '',
+   nameTask: 'tasks 1',
+   startTime: dayjs().toString(),
+   endTime: dayjs().add(1, 'h').toString(),
+   status: 'todo',
+};
 localStorage.setItem('list-catology', JSON.stringify(initCatology));
 localStorage.setItem('tasks', JSON.stringify(initTasks));
 
 interface TasksState {
-   tasks: {
-      catology: number;
-      completeMethod: number;
-      description: string;
-      nameTask: string;
-      startTime?: Dayjs;
-      endTime?: Dayjs;
-      status: 'done' | 'pending' | 'todo';
-   }[];
-   listCatology: { label: string; value: number; default: boolean }[];
+   tasks: TaskType[];
+   listCatology: CatologiesType;
 }
 
-const localStorageTasks = JSON.parse(localStorage.getItem('tasks')!);
-const localStorageCatology = JSON.parse(localStorage.getItem('list-catology')!);
-
 const initialState: TasksState = {
-   tasks: localStorageTasks,
-   listCatology: localStorageCatology,
+   tasks: [initTasks],
+   listCatology: initCatology,
 };
 
 export const tasksSlice = createSlice({
@@ -70,26 +71,23 @@ export const tasksSlice = createSlice({
       },
       removeCatology: (state, action: PayloadAction<number>) => {
          state.listCatology = state.listCatology.filter(item => item.value !== action.payload);
-         console.log(action.payload, 'remove');
       },
-      addTask: (
-         state,
-         action: PayloadAction<{
-            catology: number;
-            completeMethod: number;
-            description: string;
-            nameTask: string;
-            startTime?: Dayjs;
-            endTime?: Dayjs;
-            status: 'done' | 'pending' | 'todo';
-         }>
-      ) => {
+      addTask: (state, action: PayloadAction<TaskType>) => {
          state.tasks.push(action.payload);
+      },
+      deleteTasks: (state, action: PayloadAction<TaskType>) => {
+         state.tasks = state.tasks.filter(item => item.id !== action.payload.id);
+      },
+      updateTasks: (state, action: PayloadAction<TaskType>) => {
+         state.tasks = [...state.tasks.filter(item => item.id !== action.payload.id), action.payload];
+      },
+      changeStatus: (state, action: PayloadAction<{ item: TaskType; status: 'done' | 'pending' | 'todo' }>) => {
+         state.tasks[state.tasks.findIndex(item => item.id === action.payload.item.id)].status = action.payload.status;
       },
    },
 });
 
-export const { addCatology, removeCatology, addTask } = tasksSlice.actions;
+export const { addCatology, removeCatology, addTask, deleteTasks, updateTasks, changeStatus } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 
