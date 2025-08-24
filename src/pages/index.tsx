@@ -2,7 +2,7 @@ import Header from '@components/Portal/Header';
 import MenuLeft from '@components/Portal/MenuLeft';
 import { Outlet } from 'react-router-dom';
 
-export const Portal = () => {
+export const Main = () => {
    return (
       <div className="dashboard-layout">
          <MenuLeft />

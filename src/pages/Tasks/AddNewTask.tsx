@@ -1,6 +1,6 @@
 import { Form, Input, Modal, Select, TimePicker } from 'antd';
 import { ReactElement, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../hook';
+import { useAppDispatch, useAppSelector } from '../../../hook';
 import { TaskType, addTask, removeCatology, updateTasks } from './tasksSlice';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import AddCatology from './AddCatology';

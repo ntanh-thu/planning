@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tasksSlice from './src/pages/Portal/Tasks/tasksSlice';
+import tasksSlice from './src/pages/Tasks/tasksSlice';
 // ...
 
 export const store = configureStore({

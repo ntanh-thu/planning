@@ -1,21 +1,14 @@
-import { Portal } from './pages/Portal';
-import Dashboard from './pages/Portal/Dashboard';
-import Tasks from './pages/Portal/Tasks';
-import { Ecommerce } from './pages/Ecommerce';
+import { Main } from './pages';
+import Dashboard from './pages/Dashboard';
+import Tasks from './pages/Tasks';
 
-const PORTAL = '/portal';
-const ECOMMERCE = '/ecommerce';
 export const route = [
    {
-      path: PORTAL,
-      element: <Portal />,
+      path: '/',
+      element: <Main />,
       children: [
          { path: '', element: <Dashboard /> },
          { path: 'tasks', element: <Tasks /> },
       ],
-   },
-   {
-      path: ECOMMERCE,
-      element: <Ecommerce />,
    },
 ];
