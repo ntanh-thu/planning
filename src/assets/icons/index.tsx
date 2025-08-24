@@ -1,6 +1,6 @@
-import MenuIcon from './svgs/Menu';
-import MagnifyingGlassIcon from './svgs/MagnifyingGlass';
-import NotificationIcon from './svgs/Notification';
-import MoreIcon from './svgs/More';
+import MenuIcon from './Menu';
+import MagnifyingGlassIcon from './MagnifyingGlass';
+import NotificationIcon from './Notification';
+import MoreIcon from './More';
 
 export { MenuIcon, MagnifyingGlassIcon, NotificationIcon, MoreIcon };

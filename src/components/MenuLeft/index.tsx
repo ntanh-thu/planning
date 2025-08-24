@@ -1,16 +1,11 @@
-import { UnorderedListOutlined, ProductOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 
 const MenuLeft = () => {
    const leftMenuList = [
       {
-         name: 'Dashboard',
-         path: '',
-         icon: <ProductOutlined className="menu-left-item__icon" />,
-      },
-      {
          name: 'Tasks',
-         path: 'tasks',
+         path: '',
          icon: <UnorderedListOutlined className="menu-left-item__icon" />,
       },
    ];

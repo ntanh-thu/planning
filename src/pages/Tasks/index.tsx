@@ -1,7 +1,7 @@
 import { Button, Card, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { AddNewTask } from './AddNewTask';
-import { useAppSelector } from '../../../../hook';
+import { useAppSelector } from '../../../hook';
 import {
    CheckCircleOutlined,
    ExclamationCircleOutlined,

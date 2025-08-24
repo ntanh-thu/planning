@@ -1,4 +1,4 @@
-import MoreIcon from '@assets/icons/svgs/More';
+import MoreIcon from '@assets/icons/More';
 
 type Props = {
    name?: string;
